@@ -3,31 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>خطوات | ملف الأعمال الاستراتيجي — نسخة للطباعة</title>
+  <title>Khatawat | Portfolio</title>
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@300;400;500;700&display=swap">
 
   <style>
-    /* ============================================
-       KHATAWAT PORTFOLIO — PDF OPTIMIZED (FLOW LAYOUT)
-       ============================================ */
     :root {
       --bg-primary: #060a14;
       --bg-secondary: #0b1020;
       --bg-card: rgba(12, 18, 38, 0.88);
       --accent-cyan: #00e5ff;
-      --accent-cyan-dim: rgba(0, 229, 255, 0.15);
-      --accent-cyan-glow: rgba(0, 229, 255, 0.35);
       --accent-gold: #ffc107;
-      --accent-gold-dim: rgba(255, 193, 7, 0.15);
-      --accent-gold-glow: rgba(255, 193, 7, 0.3);
       --text-primary: #e4e8f0;
       --text-secondary: #8896aa;
       --text-heading: #f0f2f8;
-      --text-muted: #5a6a80;
-      --border-subtle: rgba(0, 229, 255, 0.12);
-      --radius-sm: 8px;
-      --radius-md: 14px;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,13 +36,12 @@
     h1, h2, h3, h4 { font-family: 'Cairo', sans-serif; color: #f0f2f8 !important; line-height: 1.3; }
     a { text-decoration: none; color: inherit; }
 
-    /* ── Backgrounds (Forced to Print) ── */
+    /* ── Backgrounds ── */
     .bg-grid {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none;
       background-image: linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px) !important;
       background-size: 60px 60px !important;
     }
-
     .bg-radial {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
       background: radial-gradient(ellipse 700px 500px at 80% 20%, rgba(0, 229, 255, 0.08), transparent),
@@ -83,15 +71,12 @@
       letter-spacing: 2px; color: #00e5ff !important; margin-bottom: 12px; opacity: 0.9;
     }
     .section-label.gold { color: #ffc107 !important; }
-
     .section-title { font-size: 2.6rem; font-weight: 900; margin-bottom: 16px; }
-    
     .title-line {
       width: 80px; height: 4px; border-radius: 4px; margin-bottom: 30px;
       background: linear-gradient(90deg, #00e5ff, transparent) !important;
       box-shadow: 0 0 15px rgba(0, 229, 255, 0.5) !important;
     }
-
     .section-desc { font-size: 1.15rem; color: #8896aa !important; line-height: 1.9; max-width: 850px; margin-bottom: 40px; }
 
     /* ── Hero ── */
@@ -105,7 +90,6 @@
     .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
     .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-    /* Ensure cards NEVER break in half in PDF */
     .card, .case-card, .feature-item {
       background: rgba(12, 18, 38, 0.9) !important; 
       border: 1px solid rgba(0, 229, 255, 0.15) !important;
@@ -116,12 +100,10 @@
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
       margin-bottom: 20px;
     }
-
     .card::before {
       content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 2px;
       background: linear-gradient(90deg, #00e5ff, transparent) !important;
     }
-
     .card-icon {
       width: 52px; height: 52px; border-radius: 12px; 
       background: rgba(0, 229, 255, 0.15) !important; 
@@ -131,11 +113,10 @@
       box-shadow: 0 0 20px rgba(0, 229, 255, 0.1) !important;
     }
     .card-icon.gold { background: rgba(255, 193, 7, 0.15) !important; color: #ffc107 !important; border-color: rgba(255, 193, 7, 0.25) !important; box-shadow: 0 0 20px rgba(255, 193, 7, 0.1) !important;}
-
     .card-title { font-family: 'Cairo', sans-serif; font-size: 1.2rem; font-weight: 800; color: #ffffff !important; margin-bottom: 12px; }
     .card-text { font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.8; }
 
-    /* ── Case Cards Special Formatting ── */
+    /* ── Case Cards Special ── */
     .case-featured {
       border: 1.5px solid rgba(0, 229, 255, 0.4) !important;
       background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(255, 193, 7, 0.05), rgba(12, 18, 38, 0.95)) !important;
@@ -145,26 +126,20 @@
       content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px;
       background: linear-gradient(90deg, #00e5ff, #ffc107, transparent) !important;
     }
-
     .featured-badge {
       display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 50px;
       font-family: 'Cairo', sans-serif; font-size: 0.75rem; font-weight: 800;
       background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(255, 193, 7, 0.2)) !important;
       color: #ffc107 !important; border: 1px solid rgba(255, 193, 7, 0.3) !important;
-      box-shadow: 0 0 15px rgba(255, 193, 7, 0.15) !important;
     }
-
     .case-badge {
       display: inline-block; padding: 4px 14px; border-radius: 50px;
       font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 800;
       background: rgba(0, 229, 255, 0.15) !important; color: #00e5ff !important; 
       border: 1px solid rgba(0, 229, 255, 0.25) !important; margin-bottom: 16px;
     }
-
     .bullet-list { list-style: none; padding: 0; }
-    .bullet-list li {
-      position: relative; padding-right: 22px; margin-bottom: 10px; font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.75;
-    }
+    .bullet-list li { position: relative; padding-right: 22px; margin-bottom: 10px; font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.75; }
     .bullet-list li::before {
       content: ''; position: absolute; right: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; 
       background: #00e5ff !important; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5) !important;
@@ -183,55 +158,81 @@
     }
     .feature-text { font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.75; }
 
-    /* ── PDF Explicit Page Flow Settings ── */
+    /* ── Optimized PDF Print CSS ── */
     @media print {
       @page {
         size: auto; 
-        margin: 0mm !important; 
+        margin: 10mm 0 !important; /* هامش بسيط فوق وتحت عشان نمنع قص أطراف الصفحة من المحرك */
       }
       body {
         margin: 0 !important;
         padding: 0 !important;
+        background: #060a14 !important;
       }
       
-      /* Let sections flow but start on a new page */
+      /* إيقاف الـ Grid في الطباعة وتحويله لـ Flex لحل مشكلة تجاهل كروم لفواصل الطباعة */
+      .cards-grid, .feature-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 20px !important;
+        /* ممنوع تحط هنا page-break-inside: avoid عشان ميعملش الفراغات الضخمة */
+      }
+      
+      /* حسابات دقيقة لعرض الكروت عشان نحافظ على التصميم داخل الـ Flex */
+      .cards-grid.cols-3 > div { width: calc(33.333% - 14px) !important; }
+      .cards-grid.cols-2 > div { width: calc(50% - 10px) !important; }
+      .cards-grid.cols-4 > div { width: calc(25% - 15px) !important; }
+      .feature-grid > div { width: calc(50% - 10px) !important; }
+
+      /* حماية العناصر الفردية من القص */
+      .card, .case-card, .feature-item {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        /* دي التريكة اللي بتجبر كروم يقرا الحواف صح وميقصش العنصر */
+        display: inline-block !important; 
+        vertical-align: top !important;
+      }
+
+      /* تنظيم الأقسام لمنع الفراغات البشعة */
       .section {
         page-break-before: always !important;
         break-before: page !important;
-        padding: 60px 40px !important;
+        padding: 40px !important;
         margin: 0 auto !important;
       }
-
-      /* Hero should be its own page */
+      
+      /* منع فصل أول قسم عشان ميعملش صفحة فاضية في البداية */
       .hero {
+        page-break-before: avoid !important;
+        break-before: auto !important;
         page-break-after: always !important;
-        padding-top: 150px !important; /* Fixed spacing instead of buggy flexbox */
+        break-after: page !important;
+        padding-top: 100px !important;
         padding-bottom: 50px !important;
-      }
-
-      /* PREVENT CUTTING ELEMENTS IN HALF */
-      .card, .case-card, .feature-item, .cards-grid {
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
       }
 
       h1, h2, h3, h4, .section-label, .title-line {
         page-break-after: avoid !important;
         break-after: avoid !important;
         page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        margin-bottom: 12px !important; /* منع العناوين تتفصل عن النص اللي تحتها */
       }
       
-      p, .section-desc {
-        page-break-inside: avoid !important;
-      }
-
-      /* Clean rendering for shadows so they don't break the PDF renderer */
-      p, div, span, li { 
-        -webkit-filter: none !important; filter: none !important; 
-      }
+      /* الحفاظ على تأثيرات الإضاءة والظلال */
+      p, div, span, li { -webkit-filter: none !important; filter: none !important; }
       .cyan, .gold, .hero-title, .title-line, .card-icon, .feature-icon, .featured-badge, .bullet-list li::before {
-        /* Maintain glow explicitly in print */
         -webkit-filter: drop-shadow(0px 0px 5px rgba(0, 229, 255, 0.3)) !important;
+      }
+      
+      /* تثبيت الخلفية عشان تغطي كل صفحات الـ PDF */
+      .bg-grid, .bg-radial {
+        position: fixed !important; 
+        top: 0 !important; 
+        left: 0 !important; 
+        width: 100vw !important; 
+        height: 100vh !important; 
+        z-index: -2 !important;
       }
     }
   </style>
@@ -241,13 +242,11 @@
 <div class="bg-grid"></div>
 <div class="bg-radial"></div>
 
-<!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
   <div class="hero-container">
     <h1 class="hero-title">ملف الأعمال <span class="cyan">الاستراتيجي</span></h1>
     <p class="hero-sub" style="font-size: 1.4rem; font-weight: 800; color: #f0f2f8 !important;">نبني نمو مربح نقدر نقيسه ونتوسع بيه.</p>
     <p class="hero-sub">إحنا مو وكالة هدفها بس تشغل إعلانات. إحنا نشتغل على تحسين الطريقة اللي تجيب بيها الشركة عملاء، ونحول الصرف التسويقي لنتائج تجارية واضحة نقدر نقيسها ونفهمها وبعدين نتوسع بيها.</p>
-    
     <p class="hero-sub" style="font-size: 1.1rem; max-width: 750px;">
       نبدأ من الأرقام، نفهم وين المشكلة، نحدد شنو اللي يمنع النمو، وبعدين نبني ونختبر الحل.<br><br>
       <strong style="color: #ffc107 !important; font-size: 1.25rem; display: block; margin-top: 10px; text-shadow: 0 0 20px rgba(255,193,7,0.2) !important;">مبيعات أكثر. عملاء أحسن. تكلفة استحواذ أكفأ. وقرارات مبنية على أرقام حقيقية.</strong>
@@ -255,7 +254,6 @@
   </div>
 </section>
 
-<!-- ═══════════ ABOUT ═══════════ -->
 <section class="section">
   <div class="section-label">منو إحنا</div>
   <h2 class="section-title">ما ندير الإعلانات <span class="cyan">بعيدا عن البزنس</span></h2>
@@ -290,24 +288,23 @@
   </div>
 </section>
 
-<!-- ═══════════ GROWTH VIEW ═══════════ -->
 <section class="section">
   <div class="section-label">رؤيتنا</div>
   <h2 class="section-title">كيف نشوف <span class="cyan">النمو؟</span></h2>
   <div class="title-line"></div>
-  <p class="section-desc">النمو بالنسبة إلنا مو: "اصرف أكثر حتى تجيب مبيعات أكثر." هاي أسهل طريقة حتى تزيد الصرف، بس مو بالضرورة طريقة تزيد الأرباح.</p>
+  <p class="section-desc">النمو بالنسبة إلنا مو: "اصرف أكثر حتى تجيب مبيعات أكثر." هاي أسهل طريقة حتى تزيد الصرف، بس مو بالضرورة طريقة تزيد األرباح.</p>
   <p class="section-desc" style="font-weight: 800; color: #f0f2f8 !important; margin-bottom: 28px; font-size: 1.25rem;">النمو الحقيقي يبدأ من نفهم:</p>
 
   <div class="cards-grid cols-2" style="margin-bottom: 30px;">
     <div class="card" style="padding: 40px;">
       <div class="card-icon" style="font-size: 1.8rem; margin-bottom: 24px;">↓</div>
       <div class="card-title" style="font-size: 1.4rem;">كم يكلفنا نجيب العميل؟</div>
-      <div class="card-text" style="font-size: 1.1rem;">إذا كانت تكلفة جلب العميل غالية ندور على طريقة نقللها من خلال: تحسين العرض، تحسين الإعلان، ورفع نسبة التحويل.</div>
+      <div class="card-text" style="font-size: 1.1rem;">إذا كانت تكلفة جلب العميل غالية ندور على طريقة نقللها من خالل: تحسين العرض، تحسين الإعلان، ورفع نسبة التحويل.</div>
     </div>
     <div class="card" style="padding: 40px;">
       <div class="card-icon gold" style="font-size: 1.8rem; margin-bottom: 24px;">↑</div>
       <div class="card-title" style="font-size: 1.4rem;">وكم يحقق إلنا هذا العميل؟</div>
-      <div class="card-text" style="font-size: 1.1rem;">وإذا كانت التكلفة جيدة، ندور على طريقة نزيد بيها قيمة العميل من خلال: زيادة متوسط قيمة الطلب، زيادة تكرار الشراء، ورفع القيمة الدائمة للعميل.</div>
+      <div class="card-text" style="font-size: 1.1rem;">وإذا كانت التكلفة جيدة، ندور على طريقة نزيد بيها قيمة العميل من خالل: زيادة متوسط قيمة الطلب، زيادة تكرار الشراء، ورفع القيمة الدائمة للعميل.</div>
     </div>
   </div>
 
@@ -320,7 +317,6 @@
   </div>
 </section>
 
-<!-- ═══════════ WHAT WE DO ═══════════ -->
 <section class="section">
   <div class="section-label">شنو اللي نسويه؟</div>
   <h2 class="section-title">نساعد الشركات تبني <span class="cyan">منظومة تسويقية</span> مرتبطة بالنتائج التجارية</h2>
@@ -357,7 +353,6 @@
   </div>
 </section>
 
-<!-- ═══════════ FRAMEWORK ═══════════ -->
 <section class="section">
   <div class="section-label gold">إطار العمل</div>
   <h2 class="section-title">حسب طبيعة <span class="gold">الشركة</span></h2>
@@ -428,13 +423,11 @@
   </div>
 </section>
 
-<!-- ═══════════ CASE STUDIES ═══════════ -->
 <section class="section">
   <div class="section-label gold">دراسات الحالة</div>
   <h2 class="section-title">أرقام <span class="gold">حقيقية</span> وقصص نجاح</h2>
   <div class="title-line"></div>
 
-  <!-- Case 04 -->
   <div class="case-card case-featured">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="featured-badge" style="font-size: 0.85rem; padding: 6px 18px;">04</span>
@@ -456,7 +449,6 @@
     </div>
   </div>
 
-  <!-- Case 05 -->
   <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important; font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">05</span>
@@ -473,12 +465,11 @@
       </div>
       <div>
         <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
-        <div class="card-text" style="color:#ffffff !important;">زيادة ملحوظة <strong style="color:#ffc107 !important;">بمتوسط قيمة الطلب</strong>، والوصول لشرائح جديدة من العملاء، وبناء مكتبة قوية من المحتوى.</div>
+        <div class="card-text" style="color:#ffffff !important;">زيادة ملحوظة <strong style="color:#ffc107 !important;">بمتوسط قيمة الطلب</strong>، والوصول لشرائح جديدة من العمالء، وبناء مكتبة قوية من المحتوى.</div>
       </div>
     </div>
   </div>
 
-  <!-- Case 06 -->
   <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">06</span>
@@ -500,7 +491,6 @@
     </div>
   </div>
 
-  <!-- Case 07 -->
   <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important; font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">07</span>
@@ -517,12 +507,11 @@
       </div>
       <div>
         <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
-        <div class="card-text" style="color:#ffffff !important;">صارت العلامة التجارية <strong style="color:#ffc107 !important;">أكثر طلبًا وانتشارًا</strong>، وزادت حركة طلب المنتج من المتاجر.</div>
+        <div class="card-text" style="color:#ffffff !important;">صارت العالمة التجارية <strong style="color:#ffc107 !important;">أكثر طلبًا وانتشارًا</strong>، وزادت حركة طلب المنتج من المتاجر.</div>
       </div>
     </div>
   </div>
   
-  <!-- Case 08 -->
   <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">08</span>
@@ -539,13 +528,12 @@
       </div>
       <div>
         <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
-        <div class="card-text" style="color:#ffffff !important;">مبيعات قوية للأفراد، وقاعدة عملاء ولاءهم عالي، وبعدين استخدام هذا الطلب كقاعدة <strong style="color:#ffc107 !important;">للتوسع</strong> بقطاع الشركات.</div>
+        <div class="card-text" style="color:#ffffff !important;">مبيعات قوية للأفراد، وقاعدة عمالء والءهم عالي، وبعدين استخدام هذا الطلب كقاعدة <strong style="color:#ffc107 !important;">للتوسع</strong> بقطاع الشركات.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ OUR WAY ═══════════ -->
 <section class="section">
   <div class="section-label gold">فلسفتنا</div>
   <h2 class="section-title">شنو اللي يميز <span class="gold">طريقتنا؟</span></h2>
@@ -589,7 +577,6 @@
   </div>
 </section>
 
-<!-- ═══════════ CONCLUSION ═══════════ -->
 <section class="section">
   <div class="section-label">شراكة النمو</div>
   <h2 class="section-title">هل شركتك جاهزة <span class="cyan">للتوسع؟</span></h2>
