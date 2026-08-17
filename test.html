@@ -9,7 +9,7 @@
 
   <style>
     /* ============================================
-       KHATAWAT PORTFOLIO — ADVANCED PDF EXPORT
+       KHATAWAT PORTFOLIO — PDF OPTIMIZED (FLOW LAYOUT)
        ============================================ */
     :root {
       --bg-primary: #060a14;
@@ -32,7 +32,6 @@
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     
-    /* Global Print Adjustments */
     html { font-size: 16px; background: #060a14; }
     
     body {
@@ -49,7 +48,6 @@
     a { text-decoration: none; color: inherit; }
 
     /* ── Backgrounds (Forced to Print) ── */
-    /* Z-index -1 and -2 ensures they stay BEHIND the text. Position fixed repeats on every printed page. */
     .bg-grid {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none;
       background-image: linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px) !important;
@@ -62,29 +60,18 @@
                   radial-gradient(ellipse 600px 600px at 20% 80%, rgba(255, 193, 7, 0.06), transparent) !important;
     }
 
-    /* ── Page Splitting Magic ── */
-    /* REMOVED flexbox here. Flexbox + page breaks causes blank pages in Chrome PDF engine! */
-    .print-page {
-      position: relative;
-      z-index: 10; /* High z-index to guarantee it sits above the backgrounds */
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 80px 40px;
-      display: block; /* Must be block for reliable PDF page breaks */
-      page-break-after: always !important;
-      break-after: page !important;
-      page-break-inside: avoid !important; /* Try to keep the page together */
+    /* ── Sections ── */
+    .section { 
+      position: relative; z-index: 10; 
+      max-width: 1200px; margin: 0 auto; 
+      padding: 60px 40px; 
     }
-
-    /* The Hero needs to look centered, so we just give it huge top padding */
-    #page-hero {
-      padding-top: 25vh; 
-    }
-
-    /* Long pages that naturally span multiple PDF pages */
-    .print-page.flow {
-      page-break-inside: auto !important; /* Allow internal breaking */
+    
+    .hero {
+      position: relative; z-index: 10;
+      max-width: 1200px; margin: 0 auto;
+      padding: 100px 40px;
+      text-align: center;
     }
 
     /* ── Typography & Colors ── */
@@ -120,8 +107,6 @@
 
     /* Ensure cards NEVER break in half in PDF */
     .card, .case-card, .feature-item {
-      page-break-inside: avoid !important;
-      break-inside: avoid !important;
       background: rgba(12, 18, 38, 0.9) !important; 
       border: 1px solid rgba(0, 229, 255, 0.15) !important;
       border-radius: 14px; 
@@ -129,6 +114,7 @@
       position: relative; 
       overflow: hidden;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+      margin-bottom: 20px;
     }
 
     .card::before {
@@ -197,7 +183,7 @@
     }
     .feature-text { font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.75; }
 
-    /* ── PDF Explicit Page Settings ── */
+    /* ── PDF Explicit Page Flow Settings ── */
     @media print {
       @page {
         size: auto; 
@@ -207,17 +193,45 @@
         margin: 0 !important;
         padding: 0 !important;
       }
-      /* Ensure text renders pure and shadows don't break the PDF renderer */
+      
+      /* Let sections flow but start on a new page */
+      .section {
+        page-break-before: always !important;
+        break-before: page !important;
+        padding: 60px 40px !important;
+        margin: 0 auto !important;
+      }
+
+      /* Hero should be its own page */
+      .hero {
+        page-break-after: always !important;
+        padding-top: 150px !important; /* Fixed spacing instead of buggy flexbox */
+        padding-bottom: 50px !important;
+      }
+
+      /* PREVENT CUTTING ELEMENTS IN HALF */
+      .card, .case-card, .feature-item, .cards-grid {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      h1, h2, h3, h4, .section-label, .title-line {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      
+      p, .section-desc {
+        page-break-inside: avoid !important;
+      }
+
+      /* Clean rendering for shadows so they don't break the PDF renderer */
       p, div, span, li { 
         -webkit-filter: none !important; filter: none !important; 
       }
       .cyan, .gold, .hero-title, .title-line, .card-icon, .feature-icon, .featured-badge, .bullet-list li::before {
         /* Maintain glow explicitly in print */
         -webkit-filter: drop-shadow(0px 0px 5px rgba(0, 229, 255, 0.3)) !important;
-      }
-      /* Remove any top padding hack in print if the converter adds its own margins, but we forced margin 0 */
-      #page-hero {
-        padding-top: 250px !important; 
       }
     }
   </style>
@@ -227,8 +241,8 @@
 <div class="bg-grid"></div>
 <div class="bg-radial"></div>
 
-<!-- ═══════════ PAGE 1: HERO ═══════════ -->
-<div class="print-page" id="page-hero">
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
   <div class="hero-container">
     <h1 class="hero-title">ملف الأعمال <span class="cyan">الاستراتيجي</span></h1>
     <p class="hero-sub" style="font-size: 1.4rem; font-weight: 800; color: #f0f2f8 !important;">نبني نمو مربح نقدر نقيسه ونتوسع بيه.</p>
@@ -239,10 +253,10 @@
       <strong style="color: #ffc107 !important; font-size: 1.25rem; display: block; margin-top: 10px; text-shadow: 0 0 20px rgba(255,193,7,0.2) !important;">مبيعات أكثر. عملاء أحسن. تكلفة استحواذ أكفأ. وقرارات مبنية على أرقام حقيقية.</strong>
     </p>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 2: ABOUT ═══════════ -->
-<div class="print-page">
+<!-- ═══════════ ABOUT ═══════════ -->
+<section class="section">
   <div class="section-label">منو إحنا</div>
   <h2 class="section-title">ما ندير الإعلانات <span class="cyan">بعيدا عن البزنس</span></h2>
   <div class="title-line"></div>
@@ -274,10 +288,10 @@
     <p class="card-text" style="margin-top:14px; font-size: 1.05rem;">المشكلة إن الإعلان ممكن يكون يشتغل، بس اوضاع البزنس نفسها ما تسمح بالتوسع. ممكن يكون عندك منتج ممتاز، بس تكلفة الحصول على العميل غالية. ممكن تكون عندك مبيعات جيدة، بس متوسط قيمة الطلب قليل. ممكن يكون عندك عائد إعلاني جيد، بس العميل يشتري مرة وحدة وبس. وممكن يكون عندك عدد كبير من العملاء المحتملين، بس نسبة قليلة منهم تتحول لمبيعات.</p>
     <p class="card-text" style="margin-top:16px; color:#00e5ff !important; font-weight:800; font-size: 1.1rem; text-shadow: 0 0 15px rgba(0,229,255,0.2) !important;">لذلك إحنا ما نشوف أي رقم بوحده. إحنا نشوف ونفحص الصورة كاملة.</p>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 3: GROWTH VIEW ═══════════ -->
-<div class="print-page">
+<!-- ═══════════ GROWTH VIEW ═══════════ -->
+<section class="section">
   <div class="section-label">رؤيتنا</div>
   <h2 class="section-title">كيف نشوف <span class="cyan">النمو؟</span></h2>
   <div class="title-line"></div>
@@ -304,10 +318,10 @@
       <span style="color:#00e5ff !important; text-shadow: 0 0 20px rgba(0,229,255,0.2) !important; display: block;">إذا كان العميل يحقق لك قيمة أكبر، يصير عندك مجال أكبر تصرف فلوس حتى تجيبه، وبالتالي يصير التوسع أسهل. وهذا هو السبب اللي يخلينا نهتم بنسبة LTV إلى CAC، ومو بس بسعر الإعلان أو عدد العملاء اللي إجوي من الحملة.</span>
     </p>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 4: WHAT WE DO ═══════════ -->
-<div class="print-page">
+<!-- ═══════════ WHAT WE DO ═══════════ -->
+<section class="section">
   <div class="section-label">شنو اللي نسويه؟</div>
   <h2 class="section-title">نساعد الشركات تبني <span class="cyan">منظومة تسويقية</span> مرتبطة بالنتائج التجارية</h2>
   <div class="title-line"></div>
@@ -341,10 +355,10 @@
       <div class="card-text">ما نضاعف الميزانية لحملة جيدة يوم واحد. نفهم: ليش نجحت؟ هل الأرقام مربحة؟ من نلقي الشي اللي يشتغل نزيد شوية شوية. ما نركض ورا الحجم على حساب الربح.</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 5: FRAMEWORK ═══════════ -->
-<div class="print-page">
+<!-- ═══════════ FRAMEWORK ═══════════ -->
+<section class="section">
   <div class="section-label gold">إطار العمل</div>
   <h2 class="section-title">حسب طبيعة <span class="gold">الشركة</span></h2>
   <div class="title-line"></div>
@@ -412,16 +426,16 @@
       <div class="card-text">لأن زيادة قيمة العميل وتكرار الشراء ممكن تكون أقوى من محاولة تقليل تكلفة جلبه للأبد.</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 6: CASE STUDIES ═══════════ -->
-<div class="print-page flow">
+<!-- ═══════════ CASE STUDIES ═══════════ -->
+<section class="section">
   <div class="section-label gold">دراسات الحالة</div>
   <h2 class="section-title">أرقام <span class="gold">حقيقية</span> وقصص نجاح</h2>
   <div class="title-line"></div>
 
   <!-- Case 04 -->
-  <div class="case-card case-featured" style="margin-bottom:28px;">
+  <div class="case-card case-featured">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="featured-badge" style="font-size: 0.85rem; padding: 6px 18px;">04</span>
       <span style="font-family:'Cairo',sans-serif; font-weight:900; color:#f0f2f8 !important; font-size:1.35rem; text-shadow: 0 0 15px rgba(0,229,255,0.3) !important;">Rocklis</span>
@@ -443,7 +457,7 @@
   </div>
 
   <!-- Case 05 -->
-  <div class="case-card" style="margin-bottom:28px;">
+  <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important; font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">05</span>
       <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">صحتي | D2C</span>
@@ -465,7 +479,7 @@
   </div>
 
   <!-- Case 06 -->
-  <div class="case-card" style="margin-bottom:28px;">
+  <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">06</span>
       <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">علامة تجارية للتجارة الإلكترونية</span>
@@ -487,7 +501,7 @@
   </div>
 
   <!-- Case 07 -->
-  <div class="case-card" style="margin-bottom:28px;">
+  <div class="case-card">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
       <span class="case-badge" style="background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important; font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">07</span>
       <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">عبو | B2B + D2C</span>
@@ -529,10 +543,10 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 7: OUR WAY ═══════════ -->
-<div class="print-page">
+<!-- ═══════════ OUR WAY ═══════════ -->
+<section class="section">
   <div class="section-label gold">فلسفتنا</div>
   <h2 class="section-title">شنو اللي يميز <span class="gold">طريقتنا؟</span></h2>
   <div class="title-line"></div>
@@ -573,10 +587,10 @@
     <p class="card-text" style="font-size: 1.15rem;">لأن الفرق بين شركة تصرف أكثر وشركة تنمو فعلاً هو قدرتها على تحويل الفلوس اللي تصرفها لفلوس أكثر. إذا صرفت 10,000 وحصلت 20,000 مبيعات، هذا بوحده ما يقولنا إذا إنت ناجح. نحتاج نعرف تكلفة المنتج، تكلفة التوصيل، الرواتب، تكلفة البيع، الربح من العميل، وشنو اللي راح يصير إذا رجع يشتري.</p>
     <p class="card-text" style="margin-top:20px; color:#00e5ff !important; font-weight:800; font-size: 1.25rem; text-shadow: 0 0 15px rgba(0,229,255,0.2) !important;">لهذا نركز على اقتصاديات العميل. الهدف هو تبني شركة تقدر تصرف أكثر لأنها تحقق أكثر.</p>
   </div>
-</div>
+</section>
 
-<!-- ═══════════ PAGE 8: CONCLUSION ═══════════ -->
-<div class="print-page">
+<!-- ═══════════ CONCLUSION ═══════════ -->
+<section class="section">
   <div class="section-label">شراكة النمو</div>
   <h2 class="section-title">هل شركتك جاهزة <span class="cyan">للتوسع؟</span></h2>
   <div class="title-line"></div>
@@ -614,7 +628,7 @@
     </p>
   </div>
 
-</div>
+</section>
 
 </body>
 </html>
