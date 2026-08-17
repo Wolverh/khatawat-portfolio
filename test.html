@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>خطوات | ملف الأعمال الاستراتيجي — نسخة للطباعة</title>
   
-  <!-- استيراد الخطوط -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@300;400;500;700&display=swap">
 
   <style>
     /* ============================================
-       KHATAWAT PORTFOLIO — PDF Optimized Styles
+       KHATAWAT PORTFOLIO — ADVANCED PDF EXPORT
        ============================================ */
-
     :root {
       --bg-primary: #060a14;
       --bg-secondary: #0b1020;
       --bg-card: rgba(12, 18, 38, 0.88);
-      --bg-card-hover: rgba(18, 28, 58, 0.95);
       --accent-cyan: #00e5ff;
       --accent-cyan-dim: rgba(0, 229, 255, 0.15);
       --accent-cyan-glow: rgba(0, 229, 255, 0.35);
@@ -29,332 +26,338 @@
       --text-heading: #f0f2f8;
       --text-muted: #5a6a80;
       --border-subtle: rgba(0, 229, 255, 0.12);
-      --border-gold: rgba(255, 193, 7, 0.15);
       --radius-sm: 8px;
       --radius-md: 14px;
-      --radius-lg: 20px;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     
-    html { font-size: 16px; }
-
+    /* Global Print Adjustments */
+    html { font-size: 16px; background: #060a14; }
+    
     body {
       font-family: 'Tajawal', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      background: #060a14 !important;
+      color: #e4e8f0 !important;
       direction: rtl;
       -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
-    h1, h2, h3, h4 { font-family: 'Cairo', sans-serif; color: var(--text-heading); line-height: 1.3; }
+    h1, h2, h3, h4 { font-family: 'Cairo', sans-serif; color: #f0f2f8 !important; line-height: 1.3; }
     a { text-decoration: none; color: inherit; }
 
-    /* ── Background ── */
+    /* ── Backgrounds (Forced to Print) ── */
     .bg-grid {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
-      background-image: linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
+      background-image: linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px) !important;
+      background-size: 60px 60px !important;
     }
 
     .bg-radial {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
-      background: radial-gradient(ellipse 600px 400px at 80% 20%, rgba(0, 229, 255, 0.06), transparent),
-                  radial-gradient(ellipse 500px 500px at 20% 80%, rgba(255, 193, 7, 0.04), transparent);
+      background: radial-gradient(ellipse 700px 500px at 80% 20%, rgba(0, 229, 255, 0.08), transparent),
+                  radial-gradient(ellipse 600px 600px at 20% 80%, rgba(255, 193, 7, 0.06), transparent) !important;
     }
 
-    /* ── Sections ── */
-    .section { position: relative; z-index: 1; padding: 60px 40px; max-width: 1280px; margin: 0 auto; }
-    
+    /* ── Page Splitting Magic ── */
+    /* By grouping content into explicit "print-page" blocks, we force the PDF to separate them cleanly */
+    .print-page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      page-break-after: always !important;
+      break-after: page !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh; /* Centers content nicely on web preview */
+    }
+
+    /* Long pages that naturally span multiple PDF pages */
+    .print-page.flow {
+      min-height: auto;
+      display: block;
+    }
+
+    /* ── Typography & Colors ── */
+    .cyan { color: #00e5ff !important; text-shadow: 0 0 30px rgba(0, 229, 255, 0.4) !important; }
+    .gold { color: #ffc107 !important; text-shadow: 0 0 25px rgba(255, 193, 7, 0.35) !important; }
+
     .section-label {
-      display: inline-block; font-family: 'Cairo', sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 2px; color: var(--accent-cyan); margin-bottom: 10px; opacity: 0.7;
+      display: inline-block; font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 2px; color: #00e5ff !important; margin-bottom: 12px; opacity: 0.9;
     }
-    .section-label.gold { color: var(--accent-gold); }
+    .section-label.gold { color: #ffc107 !important; }
 
-    .section-title { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
-    .section-title .cyan { color: var(--accent-cyan); }
-    .section-title .gold { color: var(--accent-gold); }
-
+    .section-title { font-size: 2.6rem; font-weight: 900; margin-bottom: 16px; }
+    
     .title-line {
-      width: 60px; height: 3px; border-radius: 3px; margin-bottom: 28px;
-      background: linear-gradient(90deg, var(--accent-cyan), transparent);
+      width: 80px; height: 4px; border-radius: 4px; margin-bottom: 30px;
+      background: linear-gradient(90deg, #00e5ff, transparent) !important;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.5) !important;
     }
 
-    .section-desc { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.85; max-width: 800px; margin-bottom: 40px; }
+    .section-desc { font-size: 1.15rem; color: #8896aa !important; line-height: 1.9; max-width: 850px; margin-bottom: 40px; }
 
     /* ── Hero ── */
-    .hero {
-      display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; 
-      position: relative; z-index: 1; padding: 60px 40px;
-    }
-
-    .hero-title { font-size: 3rem; font-weight: 900; margin-bottom: 16px; }
-    .hero-sub { font-size: 1.2rem; color: var(--text-secondary); max-width: 650px; line-height: 1.9; margin-bottom: 20px; }
+    .hero-title { font-size: 3.8rem; font-weight: 900; margin-bottom: 20px; text-shadow: 0 0 30px rgba(255,255,255,0.1) !important; }
+    .hero-sub { font-size: 1.3rem; color: #8896aa !important; max-width: 800px; line-height: 1.9; margin: 0 auto 24px; }
+    .hero-container { text-align: center; }
 
     /* ── Cards Grid ── */
-    .cards-grid { display: grid; gap: 20px; }
+    .cards-grid { display: grid; gap: 24px; }
     .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
     .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
     .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-    .card {
-      background: var(--bg-card); border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md); padding: 28px; position: relative; overflow: hidden;
+    /* Ensure cards NEVER break in half in PDF */
+    .card, .case-card, .feature-item {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      background: rgba(12, 18, 38, 0.9) !important; 
+      border: 1px solid rgba(0, 229, 255, 0.15) !important;
+      border-radius: 14px; 
+      padding: 30px; 
+      position: relative; 
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important; /* Baked-in drop shadow */
+    }
+
+    .card::before {
+      content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, #00e5ff, transparent) !important;
     }
 
     .card-icon {
-      width: 48px; height: 48px; border-radius: 12px; background: var(--accent-cyan-dim); 
+      width: 52px; height: 52px; border-radius: 12px; 
+      background: rgba(0, 229, 255, 0.15) !important; 
       display: flex; align-items: center; justify-content: center;
-      color: var(--accent-cyan); font-size: 1.2rem; margin-bottom: 18px; border: 1px solid rgba(0, 229, 255, 0.2);
+      color: #00e5ff !important; font-size: 1.3rem; margin-bottom: 20px; 
+      border: 1px solid rgba(0, 229, 255, 0.25) !important;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.1) !important;
     }
-    .card-icon.gold { background: var(--accent-gold-dim); color: var(--accent-gold); border-color: rgba(255, 193, 7, 0.2); }
+    .card-icon.gold { background: rgba(255, 193, 7, 0.15) !important; color: #ffc107 !important; border-color: rgba(255, 193, 7, 0.25) !important; box-shadow: 0 0 20px rgba(255, 193, 7, 0.1) !important;}
 
-    .card-title { font-family: 'Cairo', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 10px; }
-    .card-text { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; }
+    .card-title { font-family: 'Cairo', sans-serif; font-size: 1.2rem; font-weight: 800; color: #ffffff !important; margin-bottom: 12px; }
+    .card-text { font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.8; }
 
-    /* ── Case Cards ── */
-    .case-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 28px; }
-    
+    /* ── Case Cards Special Formatting ── */
     .case-featured {
-      border: 1.5px solid rgba(0, 229, 255, 0.3);
-      background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(255, 193, 7, 0.04), rgba(12, 18, 38, 0.88));
+      border: 1.5px solid rgba(0, 229, 255, 0.4) !important;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(255, 193, 7, 0.05), rgba(12, 18, 38, 0.95)) !important;
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.15), 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+    }
+    .case-featured::before {
+      content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, #00e5ff, #ffc107, transparent) !important;
     }
 
     .featured-badge {
       display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 50px;
-      font-family: 'Cairo', sans-serif; font-size: 0.72rem; font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-cyan-dim), var(--accent-gold-dim));
-      color: var(--accent-gold); border: 1px solid rgba(255, 193, 7, 0.25);
+      font-family: 'Cairo', sans-serif; font-size: 0.75rem; font-weight: 800;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(255, 193, 7, 0.2)) !important;
+      color: #ffc107 !important; border: 1px solid rgba(255, 193, 7, 0.3) !important;
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.15) !important;
     }
 
     .case-badge {
       display: inline-block; padding: 4px 14px; border-radius: 50px;
-      font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700;
-      background: var(--accent-cyan-dim); color: var(--accent-cyan); border: 1px solid rgba(0, 229, 255, 0.2); margin-bottom: 14px;
+      font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 800;
+      background: rgba(0, 229, 255, 0.15) !important; color: #00e5ff !important; 
+      border: 1px solid rgba(0, 229, 255, 0.25) !important; margin-bottom: 16px;
     }
 
     .bullet-list { list-style: none; padding: 0; }
     .bullet-list li {
-      position: relative; padding-right: 22px; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75;
+      position: relative; padding-right: 22px; margin-bottom: 10px; font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.75;
     }
     .bullet-list li::before {
-      content: ''; position: absolute; right: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-cyan);
+      content: ''; position: absolute; right: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; 
+      background: #00e5ff !important; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5) !important;
     }
 
     /* ── Feature Grid ── */
-    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .feature-item {
-      display: flex; align-items: flex-start; gap: 14px;
-      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 22px;
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(12, 18, 38, 0.9) !important; border: 1px solid rgba(0, 229, 255, 0.15) !important; border-radius: 14px; padding: 24px;
     }
     .feature-icon {
-      flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
-      background: var(--accent-cyan-dim); display: flex; align-items: center; justify-content: center;
-      color: var(--accent-cyan); font-size: 1rem;
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(0, 229, 255, 0.15) !important; display: flex; align-items: center; justify-content: center;
+      color: #00e5ff !important; font-size: 1.1rem; box-shadow: 0 0 15px rgba(0, 229, 255, 0.2) !important;
     }
-    .feature-text { font-size: 0.93rem; color: var(--text-secondary); line-height: 1.7; }
+    .feature-text { font-size: 0.95rem; color: #a5b4cb !important; line-height: 1.75; }
 
-    .glow-btn {
-      display: inline-flex; align-items: center; padding: 12px 28px; border-radius: 50px;
-      font-family: 'Cairo', sans-serif; font-size: 0.88rem; font-weight: 700;
-      color: var(--accent-cyan); background: rgba(0, 229, 255, 0.06); border: 1.5px solid rgba(0, 229, 255, 0.3);
-    }
-
-    .section-divider {
-      width: 100%; max-width: 1280px; margin: 0 auto; height: 1px; background: var(--border-subtle);
-    }
-
-    /* ── PDF Print Optimization ── */
+    /* ── PDF Explicit Page Settings ── */
     @media print {
-      * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+      @page {
+        size: auto; /* Or specific size if provided by the user converter, typically A4 or Letter */
+        margin: 0 !important; /* Edge to edge printing */
       }
       body {
-        background-color: var(--bg-primary) !important;
-        color: var(--text-primary) !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
-      .bg-grid, .bg-radial {
-        display: none !important; /* Hide fixed backgrounds to avoid weird print tiling */
+      .print-page {
+        /* Ensure pages snap perfectly in PDF */
+        min-height: 100vh !important; 
+        padding: 80px 60px !important; 
+        margin: 0 !important;
       }
-      .card, .case-card, .feature-item {
-        page-break-inside: avoid;
-        break-inside: avoid;
-        border: 1px solid rgba(0, 229, 255, 0.2) !important;
-        background-color: #0c1226 !important;
+      .print-page.flow {
+        min-height: auto !important;
       }
-      .section {
-        padding: 40px 20px !important;
-        page-break-inside: auto;
+      /* Ensure text renders pure */
+      p, div, span, li { text-shadow: none; /* Soften text shadows in print if they look muddy, but keep glow on accents */ }
+      .cyan, .gold, .hero-title, .title-line, .card-icon, .feature-icon, .featured-badge, .bullet-list li::before {
+        /* Maintain glow explicitly in print */
+        -webkit-filter: drop-shadow(0px 0px 5px rgba(0, 229, 255, 0.3)) !important;
       }
-      h2, h3, .section-label {
-        page-break-after: avoid;
-      }
-      /* Ensure text colors are forced in print */
-      .cyan { color: #00e5ff !important; }
-      .gold { color: #ffc107 !important; }
-      .card-title, .hero-title, .section-title { color: #ffffff !important; }
-      .card-text, .section-desc, .feature-text, .bullet-list li { color: #a5b4cb !important; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero" id="hero">
-  <h1 class="hero-title">ملف الأعمال <span class="cyan">الاستراتيجي</span></h1>
-  <p class="hero-sub" style="font-size: 1.3rem; font-weight: 700; color: var(--text-heading);">نبني نمو مربح نقدر نقيسه ونتوسع بيه.</p>
-  <p class="hero-sub" style="margin-top: -20px; margin-bottom: 24px;">إحنا مو وكالة هدفها بس تشغل إعلانات. إحنا نشتغل على تحسين الطريقة اللي تجيب بيها الشركة عملاء، ونحول الصرف التسويقي لنتائج تجارية واضحة نقدر نقيسها ونفهمها وبعدين نتوسع بيها.</p>
-  
-  <p class="hero-sub" style="font-size: 1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 30px;">
-    نبدأ من الأرقام، نفهم وين المشكلة، نحدد شنو اللي يمنع النمو، وبعدين نبني ونختبر الحل.<br>
-    <strong style="color: var(--accent-gold);">مبيعات أكثر. عملاء أحسن. تكلفة استحواذ أكفأ. وقرارات مبنية على أرقام حقيقية.</strong>
-  </p>
-</section>
+<div class="bg-grid"></div>
+<div class="bg-radial"></div>
 
-<!-- ═══════════ ABOUT ═══════════ -->
-<section class="section" id="about">
+<!-- ═══════════ PAGE 1: HERO ═══════════ -->
+<div class="print-page">
+  <div class="hero-container">
+    <h1 class="hero-title">ملف الأعمال <span class="cyan">الاستراتيجي</span></h1>
+    <p class="hero-sub" style="font-size: 1.4rem; font-weight: 800; color: #f0f2f8 !important;">نبني نمو مربح نقدر نقيسه ونتوسع بيه.</p>
+    <p class="hero-sub">إحنا مو وكالة هدفها بس تشغل إعلانات. إحنا نشتغل على تحسين الطريقة اللي تجيب بيها الشركة عملاء، ونحول الصرف التسويقي لنتائج تجارية واضحة نقدر نقيسها ونفهمها وبعدين نتوسع بيها.</p>
+    
+    <p class="hero-sub" style="font-size: 1.1rem; max-width: 750px;">
+      نبدأ من الأرقام، نفهم وين المشكلة، نحدد شنو اللي يمنع النمو، وبعدين نبني ونختبر الحل.<br><br>
+      <strong style="color: #ffc107 !important; font-size: 1.25rem; display: block; margin-top: 10px; text-shadow: 0 0 20px rgba(255,193,7,0.2) !important;">مبيعات أكثر. عملاء أحسن. تكلفة استحواذ أكفأ. وقرارات مبنية على أرقام حقيقية.</strong>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 2: ABOUT ═══════════ -->
+<div class="print-page">
   <div class="section-label">منو إحنا</div>
   <h2 class="section-title">ما ندير الإعلانات <span class="cyan">بعيدا عن البزنس</span></h2>
   <div class="title-line"></div>
-  <p class="section-desc">بمعنى أن الإعلان بحد ذاته مو هو الهدف. الهدف هو إن الشركة تصرف مبلغ معين حتى تجيب عميل، وبعدين تطلع من هذا العميل قيمة وربح أكبر من تكلفة جلبه.</p>
-  <p class="section-desc" style="margin-bottom: 24px;">لهذا السبب، من نشتغل ويه أي شركة، ما نبدأ بسؤال: "شنو الإعلان اللي راح نطلقه؟"</p>
+  <p class="section-desc">بمعنى أن الإعلان بحد ذاته مو هو الهدف. الهدف هو إن الشركة تصرف مبلغ معين حتى تجيب عميل، وبعدين تطلع من هذا العميل قيمة وربح أكبر من تكلفة جلبه.<br><br>لهذا السبب، من نشتغل ويه أي شركة، ما نبدأ بسؤال: "شنو الإعلان اللي راح نطلقه؟"</p>
   
-  <p class="section-desc" style="color: var(--accent-gold); font-weight: 700; margin-bottom: 20px;">نبدأ بأسئلة أهم:</p>
+  <p class="section-desc" style="color: #ffc107 !important; font-weight: 800; margin-bottom: 24px;">نبدأ بأسئلة أهم:</p>
 
-  <div class="cards-grid cols-4">
+  <div class="cards-grid cols-4" style="margin-bottom: 30px;">
     <div class="card" style="text-align:center;">
-      <div class="card-icon" style="margin:0 auto 14px;"><span style="font-size:0.85rem;">💰</span></div>
-      <div class="card-title" style="font-size:0.9rem;">كم مبيعاتك؟ وكم تكلفة جلب العميل؟</div>
+      <div class="card-icon" style="margin:0 auto 16px;"><span style="font-size:1rem;">💰</span></div>
+      <div class="card-title" style="font-size:0.95rem;">كم مبيعاتك؟ وكم تكلفة جلب العميل؟</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div class="card-icon gold" style="margin:0 auto 14px;"><span style="font-size:0.85rem;">🛒</span></div>
-      <div class="card-title" style="font-size:0.9rem;">كم يصرف العميل بأول مرة يشتري بيها؟</div>
+      <div class="card-icon gold" style="margin:0 auto 16px;"><span style="font-size:1rem;">🛒</span></div>
+      <div class="card-title" style="font-size:0.95rem;">كم يصرف العميل بأول مرة يشتري بيها؟</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div class="card-icon" style="margin:0 auto 14px;"><span style="font-size:0.85rem;">🔄</span></div>
-      <div class="card-title" style="font-size:0.9rem;">كم قيمة العميل وكم مرة يرجع يشتري؟</div>
+      <div class="card-icon" style="margin:0 auto 16px;"><span style="font-size:1rem;">🔄</span></div>
+      <div class="card-title" style="font-size:0.95rem;">كم قيمة العميل وكم مرة يرجع يشتري؟</div>
     </div>
     <div class="card" style="text-align:center;">
-      <div class="card-icon gold" style="margin:0 auto 14px;"><span style="font-size:0.85rem;">📈</span></div>
-      <div class="card-title" style="font-size:0.9rem;">شنو نسبة تحول المهتم إلى مشتري؟</div>
+      <div class="card-icon gold" style="margin:0 auto 16px;"><span style="font-size:1rem;">📈</span></div>
+      <div class="card-title" style="font-size:0.95rem;">شنو نسبة تحول المهتم إلى مشتري؟</div>
     </div>
   </div>
 
-  <div class="case-card" style="margin-top:28px;">
-    <p class="card-text">وين يوقف العميل داخل مسار الشراء؟ وشنو اللي يمنع الشركة إنها تزيد الصرف بشكل مربح؟ لأن المشكلة بكثير شركات مو إن الإعلانات سيئة.</p>
-    <p class="card-text" style="margin-top:12px;">المشكلة إن الإعلان ممكن يكون يشتغل، بس اوضاع البزنس نفسها ما تسمح بالتوسع. ممكن يكون عندك منتج ممتاز، بس تكلفة الحصول على العميل غالية. ممكن تكون عندك مبيعات جيدة، بس متوسط قيمة الطلب قليل. ممكن يكون عندك عائد إعلاني جيد، بس العميل يشتري مرة وحدة وبس. وممكن يكون عندك عدد كبير من العملاء المحتملين، بس نسبة قليلة منهم تتحول لمبيعات.</p>
-    <p class="card-text" style="margin-top:12px; color:var(--accent-cyan); font-weight:600;">لذلك إحنا ما نشوف أي رقم بوحده. إحنا نشوف ونفحص الصورة كاملة.</p>
+  <div class="case-card">
+    <p class="card-text" style="font-size: 1.05rem;">وين يوقف العميل داخل مسار الشراء؟ وشنو اللي يمنع الشركة إنها تزيد الصرف بشكل مربح؟ لأن المشكلة بكثير شركات مو إن الإعلانات سيئة.</p>
+    <p class="card-text" style="margin-top:14px; font-size: 1.05rem;">المشكلة إن الإعلان ممكن يكون يشتغل، بس اوضاع البزنس نفسها ما تسمح بالتوسع. ممكن يكون عندك منتج ممتاز، بس تكلفة الحصول على العميل غالية. ممكن تكون عندك مبيعات جيدة، بس متوسط قيمة الطلب قليل. ممكن يكون عندك عائد إعلاني جيد، بس العميل يشتري مرة وحدة وبس. وممكن يكون عندك عدد كبير من العملاء المحتملين، بس نسبة قليلة منهم تتحول لمبيعات.</p>
+    <p class="card-text" style="margin-top:16px; color:#00e5ff !important; font-weight:800; font-size: 1.1rem; text-shadow: 0 0 15px rgba(0,229,255,0.2) !important;">لذلك إحنا ما نشوف أي رقم بوحده. إحنا نشوف ونفحص الصورة كاملة.</p>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ GROWTH VIEW ═══════════ -->
-<section class="section" id="growth">
+<!-- ═══════════ PAGE 3: GROWTH VIEW ═══════════ -->
+<div class="print-page">
   <div class="section-label">رؤيتنا</div>
   <h2 class="section-title">كيف نشوف <span class="cyan">النمو؟</span></h2>
   <div class="title-line"></div>
   <p class="section-desc">النمو بالنسبة إلنا مو: "اصرف أكثر حتى تجيب مبيعات أكثر." هاي أسهل طريقة حتى تزيد الصرف، بس مو بالضرورة طريقة تزيد الأرباح.</p>
-  <p class="section-desc" style="font-weight: 700; color: var(--text-heading); margin-bottom: 24px;">النمو الحقيقي يبدأ من نفهم:</p>
+  <p class="section-desc" style="font-weight: 800; color: #f0f2f8 !important; margin-bottom: 28px; font-size: 1.25rem;">النمو الحقيقي يبدأ من نفهم:</p>
 
-  <div class="cards-grid cols-2">
-    <div class="card">
-      <div class="card-icon">↓</div>
-      <div class="card-title">كم يكلفنا نجيب العميل؟</div>
-      <div class="card-text">إذا كانت تكلفة جلب العميل غالية ندور على طريقة نقللها من خلال: تحسين العرض، تحسين الإعلان، ورفع نسبة التحويل.</div>
+  <div class="cards-grid cols-2" style="margin-bottom: 30px;">
+    <div class="card" style="padding: 40px;">
+      <div class="card-icon" style="font-size: 1.8rem; margin-bottom: 24px;">↓</div>
+      <div class="card-title" style="font-size: 1.4rem;">كم يكلفنا نجيب العميل؟</div>
+      <div class="card-text" style="font-size: 1.1rem;">إذا كانت تكلفة جلب العميل غالية ندور على طريقة نقللها من خلال: تحسين العرض، تحسين الإعلان، ورفع نسبة التحويل.</div>
     </div>
-    <div class="card">
-      <div class="card-icon gold">↑</div>
-      <div class="card-title">وكم يحقق إلنا هذا العميل؟</div>
-      <div class="card-text">وإذا كانت التكلفة جيدة، ندور على طريقة نزيد بيها قيمة العميل من خلال: زيادة متوسط قيمة الطلب، زيادة تكرار الشراء، ورفع القيمة الدائمة للعميل.</div>
+    <div class="card" style="padding: 40px;">
+      <div class="card-icon gold" style="font-size: 1.8rem; margin-bottom: 24px;">↑</div>
+      <div class="card-title" style="font-size: 1.4rem;">وكم يحقق إلنا هذا العميل؟</div>
+      <div class="card-text" style="font-size: 1.1rem;">وإذا كانت التكلفة جيدة، ندور على طريقة نزيد بيها قيمة العميل من خلال: زيادة متوسط قيمة الطلب، زيادة تكرار الشراء، ورفع القيمة الدائمة للعميل.</div>
     </div>
   </div>
 
-  <div class="case-card" style="margin-top:24px; text-align:center;">
-    <p style="font-family:'Cairo',sans-serif; font-size:1.05rem; font-weight:700; color:var(--accent-gold); line-height:1.8;">
+  <div class="case-card" style="text-align:center; padding: 40px;">
+    <p style="font-family:'Cairo',sans-serif; font-size:1.25rem; font-weight:800; color:#ffc107 !important; line-height:1.9; text-shadow: 0 0 20px rgba(255,193,7,0.2) !important;">
       أو تحسين أكثر من عنصر بنفس الوقت.<br>
-      لأنك مو دائماً تحتاج تجيب العميل بسعر أقل. مرات يكون الحل الأفضل إنك تخلي العميل قيمته أكبر.<br>
-      <span style="color:var(--accent-cyan);">إذا كان العميل يحقق لك قيمة أكبر، يصير عندك مجال أكبر تصرف فلوس حتى تجيبه، وبالتالي يصير التوسع أسهل. وهذا هو السبب اللي يخلينا نهتم بنسبة LTV إلى CAC، ومو بس بسعر الإعلان أو عدد العملاء اللي إجوي من الحملة.</span>
+      لأنك مو دائماً تحتاج تجيب العميل بسعر أقل. مرات يكون الحل الأفضل إنك تخلي العميل قيمته أكبر.<br><br>
+      <span style="color:#00e5ff !important; text-shadow: 0 0 20px rgba(0,229,255,0.2) !important; display: block;">إذا كان العميل يحقق لك قيمة أكبر، يصير عندك مجال أكبر تصرف فلوس حتى تجيبه، وبالتالي يصير التوسع أسهل. وهذا هو السبب اللي يخلينا نهتم بنسبة LTV إلى CAC، ومو بس بسعر الإعلان أو عدد العملاء اللي إجوي من الحملة.</span>
     </p>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ WHAT WE DO ═══════════ -->
-<section class="section" id="services">
+<!-- ═══════════ PAGE 4: WHAT WE DO ═══════════ -->
+<div class="print-page">
   <div class="section-label">شنو اللي نسويه؟</div>
   <h2 class="section-title">نساعد الشركات تبني <span class="cyan">منظومة تسويقية</span> مرتبطة بالنتائج التجارية</h2>
   <div class="title-line"></div>
   <p class="section-desc">تبدأ من العرض والإعلان وما توقف عند أول مرة يشتري بيها العميل.</p>
 
   <div class="cards-grid cols-3">
-    <!-- 01 -->
     <div class="card">
       <div class="card-icon">01</div>
       <div class="card-title">تحسين الاستحواذ</div>
-      <div class="card-text">
-        ندور على أحسن طريقة نجيب بيها عملاء جدد بتكلفة مناسبة. نختبر: الرسايل الإعلانية، زوايا البيع، المحتوى، العروض، الجمهور، مسار العميل، وصف المنتج، والصفحات. الهدف مو إننا نشغل عدد أكبر من الإعلانات. الهدف هو نكتشف شنو اللي يجيب نتيجة فعلية وبعدين نزيد الاستثمار بيه.
-      </div>
+      <div class="card-text">ندور على أحسن طريقة نجيب بيها عملاء جدد بتكلفة مناسبة. نختبر: الرسايل، زوايا البيع، المحتوى، العروض، والجمهور. الهدف نكتشف شنو اللي يجيب نتيجة فعلية ونزيد الاستثمار بيه.</div>
     </div>
-    <!-- 02 -->
     <div class="card">
       <div class="card-icon gold">02</div>
       <div class="card-title">صناعة الإعلانات والمحتوى</div>
-      <div class="card-text">
-        الإعلان مو مجرد تصميم حلو. الإعلان هو اختبار للسوق. نريد نعرف: شنو الرسالة اللي تخلي العميل يوقف وينتبه؟ شنو المشكلة اللي يهتم بيها؟ شنو الوعد اللي يجذبه وشنو السبب اللي يخليه يشتري هسه؟ ننتج ونختبر أفكار كثيرة، ندور على الإعلانات اللي تثبت نفسها بالأرقام ونكررها.
-      </div>
+      <div class="card-text">الإعلان هو اختبار للسوق. نريد نعرف: شنو اللي يخلي العميل ينتبه وشنو الوعد اللي يجذبه؟ ننتج أفكار كثيرة، ندور على الإعلانات اللي تثبت نفسها بالأرقام ونكررها.</div>
     </div>
-    <!-- 03 -->
     <div class="card">
       <div class="card-icon">03</div>
       <div class="card-title">تحسين العرض</div>
-      <div class="card-text">
-        مرات الإعلان جيد، بس الشي اللي نعرضه مو قوي كفاية. نراجع: شنو نبيع؟ لمن نبيعه؟ كيف نقدمه؟ شنو اللي يحصل عليه العميل؟ شنو المختلف وشنو اللي يسهل القرار؟ العرض القوي ما يحتاج يكون معقد. المهم القيمة واضحة، والمخاطرة مفهومة وقليلة على قد ما نقدر.
-      </div>
+      <div class="card-text">مرات الإعلان جيد، بس اللي نعرضه مو قوي كفاية. نراجع: شنو نبيع؟ لمن؟ شنو المختلف؟ المهم القيمة واضحة، والمخاطرة قليلة على قد ما نقدر.</div>
     </div>
-    <!-- 04 -->
     <div class="card">
       <div class="card-icon gold">04</div>
       <div class="card-title">تحسين مسار البيع</div>
-      <div class="card-text">
-        الشركة ممكن تجيب آلاف الزيارات وتخسرهم قبل الشراء. نشوف الرحلة كاملة: الإعلان → الصفحة → العرض → التواصل → الشراء → ما بعد الشراء. وندور وين المكان اللي تتسرب منه المبيعات ونصلحه بالصفحة أو العرض أو المتابعة. ما نذب اللوم تلقائياً على الإعلانات.
-      </div>
+      <div class="card-text">الشركة ممكن تجيب زيارات وتخسرهم قبل الشراء. نشوف الرحلة: الإعلان → الصفحة → العرض → الشراء → ما بعد الشراء. ندور وين المكان اللي تتسرب منه المبيعات ونصلحه.</div>
     </div>
-    <!-- 05 -->
     <div class="card">
       <div class="card-icon">05</div>
       <div class="card-title">زيادة قيمة العميل</div>
-      <div class="card-text">
-        جلب العميل هي بداية العلاقة. نشتغل على زيادة <strong>متوسط قيمة الطلب</strong> (الباقات والمنتجات الإضافية)، وزيادة <strong>تكرار الشراء</strong>، ورفع <strong>القيمة الدائمة للعميل</strong>. كل ما زادت قيمة العميل، زادت قدرة الشركة إنها تتحمل تكلفة استحواذ أعلى وتتوسع.
-      </div>
+      <div class="card-text">جلب العميل هي البداية. نشتغل على زيادة متوسط قيمة الطلب، وتكرار الشراء، ورفع القيمة الدائمة. كل ما زادت قيمة العميل، زادت قدرة الشركة تتوسع.</div>
     </div>
-    <!-- 06 -->
     <div class="card">
       <div class="card-icon gold">06</div>
       <div class="card-title">التوسع</div>
-      <div class="card-text">
-        ما نضاعف الميزانية بس لأن في حملة جابت نتيجة جيدة ليوم. نفهم: ليش نجحت؟ هل نقدر نكرره؟ هل الأرقام بعدها مربحة؟ هل في مساحة كافية بالسوق وهل اقتصادياتك تسمح؟ من نلقي الشي اللي يشتغل نزيد شوية شوية، ومن توقف الأرقام نوقف. ما نركض ورا الحجم على حساب الربح.
-      </div>
+      <div class="card-text">ما نضاعف الميزانية لحملة جيدة يوم واحد. نفهم: ليش نجحت؟ هل الأرقام مربحة؟ من نلقي الشي اللي يشتغل نزيد شوية شوية. ما نركض ورا الحجم على حساب الربح.</div>
     </div>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ FRAMEWORK ═══════════ -->
-<section class="section" id="framework">
+<!-- ═══════════ PAGE 5: FRAMEWORK ═══════════ -->
+<div class="print-page">
   <div class="section-label gold">إطار العمل</div>
   <h2 class="section-title">حسب طبيعة <span class="gold">الشركة</span></h2>
   <div class="title-line"></div>
   <p class="section-desc">مافي طريقة وحدة تنفع لكل الشركات. لذلك نبدأ من نموذج العمل نفسه.</p>
 
-  <div class="cards-grid cols-3">
+  <div class="cards-grid cols-3" style="margin-bottom: 40px;">
     <div class="card">
-      <div class="case-badge" style="margin-bottom:16px;">البيع المباشر للمستهلك</div>
-      <div class="card-title">الهدف: نجيب عميل مربح ونزيدهم</div>
+      <div class="case-badge" style="margin-bottom:18px;">البيع المباشر للمستهلك</div>
+      <div class="card-title" style="font-size: 1.15rem; margin-bottom: 16px;">الهدف: نجيب عميل مربح ونزيدهم</div>
       <ul class="bullet-list">
         <li>تكلفة الحصول على العميل</li>
         <li>العائد على الإنفاق الإعلاني ROAS</li>
@@ -364,8 +367,8 @@
       </ul>
     </div>
     <div class="card">
-      <div class="case-badge" style="margin-bottom:16px; background:var(--accent-gold-dim); color:var(--accent-gold); border-color:rgba(255,193,7,0.2);">البيع للأفراد</div>
-      <div class="card-title">الهدف: بناء طلب مستمر نقدر نتوسع عليه</div>
+      <div class="case-badge" style="margin-bottom:18px; background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important;">البيع للأفراد</div>
+      <div class="card-title" style="font-size: 1.15rem; margin-bottom: 16px;">الهدف: بناء طلب مستمر نتوسع عليه</div>
       <ul class="bullet-list">
         <li>حجم المبيعات</li>
         <li>الوصول لشرائح جديدة</li>
@@ -375,8 +378,8 @@
       </ul>
     </div>
     <div class="card">
-      <div class="case-badge" style="margin-bottom:16px;">البيع للشركات</div>
-      <div class="card-title">الهدف: عملاء محتملين نقدر نحولهم لمبيعات</div>
+      <div class="case-badge" style="margin-bottom:18px;">البيع للشركات</div>
+      <div class="card-title" style="font-size: 1.15rem; margin-bottom: 16px;">الهدف: عملاء محتملين نحولهم لمبيعات</div>
       <ul class="bullet-list">
         <li>جودة العملاء المحتملين</li>
         <li>تكلفة الحصول على العميل المحتمل</li>
@@ -386,234 +389,236 @@
       </ul>
     </div>
   </div>
-</section>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ HOW WE WORK ═══════════ -->
-<section class="section">
   <div class="section-label">طريقة الشغل</div>
   <h2 class="section-title">كيف <span class="cyan">نشتغل؟</span></h2>
   <div class="title-line"></div>
-
+  
   <div class="cards-grid cols-3">
-    <div class="card">
-      <div class="card-icon">01</div>
-      <div class="card-title">نفهم البزنس</div>
-      <div class="card-text">قبل ما نطلق أي حملة، نفهم: المنتج، السوق، العميل، الأسعار، الهوامش، متوسط قيمة الطلب، تكلفة الحصول على العميل، القيمة الدائمة للعميل، طريقة البيع، ومسار العميل. لأنك ما تقدر تحسن شي إنت ما تفهمه.</div>
+    <div class="card" style="padding: 24px;">
+      <div class="card-title" style="color: #00e5ff !important;">01 — نفهم البزنس</div>
+      <div class="card-text">نفهم: المنتج، السوق، الأسعار، متوسط قيمة الطلب، وتكلفة الحصول على العميل. لأنك ما تقدر تحسن شي إنت ما تفهمه.</div>
     </div>
-    <div class="card">
-      <div class="card-icon gold">02</div>
-      <div class="card-title">نحدد نقطة الاختناق</div>
-      <div class="card-text">نسأل: شنو الشي اللي يمنع الشركة من النمو هسه؟ هل المشكلة بجلب العملاء؟ بالعرض؟ بالتحويل؟ بقيمة الطلب؟ أو العملاء ما يرجعون؟ لو الشركة تصرف أكثر من اللي تقدر تتحمله؟ نحدد المشكلة بالبداية ونقرر.</div>
+    <div class="card" style="padding: 24px;">
+      <div class="card-title" style="color: #ffc107 !important;">02 — نحدد نقطة الاختناق</div>
+      <div class="card-text">نسأل: شنو اللي يمنع الشركة تنمو هسه؟ العرض؟ جلب العملاء؟ التحويل؟ نحدد المشكلة بالبداية ونقرر.</div>
     </div>
-    <div class="card">
-      <div class="card-icon">03</div>
-      <div class="card-title">نبني خطة الاختبار</div>
-      <div class="card-text">بدل ما نحط كل الميزانية على فكرة وحدة، نبني مجموعة اختبارات. نختبر الرسايل، الزوايا، المحتوى، العروض، الصفحات. وبعدين نخلي الأرقام هي اللي تقرر الفائز.</div>
+    <div class="card" style="padding: 24px;">
+      <div class="card-title" style="color: #00e5ff !important;">03 — نبني خطة الاختبار</div>
+      <div class="card-text">نبني مجموعة اختبارات للرسايل والعروض ونخلي الأرقام هي اللي تقرر الفائز بدل وضع الميزانية بفكرة وحدة.</div>
     </div>
-    <div class="card">
-      <div class="card-icon gold">04</div>
-      <div class="card-title">نضاعف اللي يثبت نجاحه</div>
-      <div class="card-text">من يبين إعلان أو عرض يجيب نتيجة أحسن، نسأل: كيف نكرر النجاح؟ نسوي نسخ، نختبر زوايا، نوسع الجمهور ونزيد الميزانية شوية شوية. الفكرة إننا نبني نظام يقدر يجيب نتائج بشكل متكرر.</div>
+    <div class="card" style="padding: 24px;">
+      <div class="card-title" style="color: #ffc107 !important;">04 — نضاعف اللي يثبت نجاحه</div>
+      <div class="card-text">من يبين عرض يجيب نتيجة أحسن، نوسع الجمهور ونزيد الميزانية شوية شوية لنبني نظام يجيب نتائج متكررة.</div>
     </div>
-    <div class="card">
-      <div class="card-icon">05</div>
-      <div class="card-title">نحسن ما بعد الاستحواذ</div>
-      <div class="card-text">البيع مو نهاية الشغل. نشوف: قيمة الطلب، تجربة العميل، تكرار الشراء، المنتجات الإضافية، والقيمة اللي يحققها العميل بمرور الوقت. لأن زيادة قيمة العميل ممكن تكون أقوى من محاولة تقليل تكلفة جلبه للأبد.</div>
+    <div class="card" style="padding: 24px;">
+      <div class="card-title" style="color: #00e5ff !important;">05 — نحسن ما بعد الاستحواذ</div>
+      <div class="card-text">لأن زيادة قيمة العميل وتكرار الشراء ممكن تكون أقوى من محاولة تقليل تكلفة جلبه للأبد.</div>
     </div>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ CASE STUDIES ═══════════ -->
-<section class="section" id="cases">
+<!-- ═══════════ PAGE 6: CASE STUDIES ═══════════ -->
+<div class="print-page flow">
   <div class="section-label gold">دراسات الحالة</div>
   <h2 class="section-title">أرقام <span class="gold">حقيقية</span> وقصص نجاح</h2>
   <div class="title-line"></div>
 
-  <!-- Case 04: Rocklis (Featured) -->
-  <div class="case-card case-featured" style="margin-bottom:20px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-      <span class="featured-badge">04</span>
-      <span style="font-family:'Cairo',sans-serif; font-weight:800; color:var(--text-heading); font-size:1.15rem; text-shadow: 0 0 10px rgba(0, 229, 255, 0.2);">Rocklis</span>
+  <!-- Case 04 -->
+  <div class="case-card case-featured" style="margin-bottom:28px;">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <span class="featured-badge" style="font-size: 0.85rem; padding: 6px 18px;">04</span>
+      <span style="font-family:'Cairo',sans-serif; font-weight:900; color:#f0f2f8 !important; font-size:1.35rem; text-shadow: 0 0 15px rgba(0,229,255,0.3) !important;">Rocklis</span>
     </div>
-    <div class="cards-grid cols-3" style="gap:14px;">
+    <div class="cards-grid cols-3" style="gap:20px;">
       <div>
-        <div style="font-size:0.85rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">المشكلة</div>
+        <div style="font-size:0.95rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">المشكلة</div>
         <div class="card-text">منتج قوي، بس النمو كان محدود بسبب الاعتماد على إعلانات الوعي التقليدية ومافي منظومة واضحة تحول الاهتمام إلى مبيعات.</div>
       </div>
       <div>
-        <div style="font-size:0.85rem; color:var(--accent-gold); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">شنو اللي سويناه؟</div>
-        <div class="card-text">بدأنا باختبار مستمر. استخدمنا فيديوهات استجابة مباشرة وتجارب عملاء لمعرفة اللي يدفع العميل يشتري. حسنّا مسار البيع وصممنا باقات مجمعة، وزيدنا الميزانية للمربح تدريجياً.</div>
+        <div style="font-size:0.95rem; color:#ffc107 !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">شنو اللي سويناه؟</div>
+        <div class="card-text">بدأنا باختبار مستمر. استخدمنا فيديوهات استجابة مباشرة وتجارب عملاء. حسنّا مسار البيع وصممنا باقات مجمعة، وزيدنا الميزانية للمربح تدريجياً.</div>
       </div>
       <div>
-        <div style="font-size:0.85rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">النتيجة</div>
-        <div class="card-text" style="color:var(--text-heading);">مضاعفة المبيعات 4 مرات — نمو بنسبة <strong style="color:var(--accent-gold); font-size: 1.1em;">400%</strong>. صارت العلامة من أكثر العلامات طلبًا بالعراق، مع الحفاظ على عائد إعلاني عالي وتحسين تكلفة الحصول على العملاء.</div>
+        <div style="font-size:0.95rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
+        <div class="card-text" style="color:#ffffff !important; font-size: 1.05rem;">مضاعفة المبيعات 4 مرات — نمو بنسبة <strong style="color:#ffc107 !important; font-size: 1.3em; text-shadow: 0 0 15px rgba(255,193,7,0.3) !important;">400%</strong>. صارت العلامة من أكثر العلامات طلبًا بالعراق، مع الحفاظ على عائد إعلاني عالي.</div>
       </div>
     </div>
   </div>
 
-  <!-- Case 05: صحتي -->
-  <div class="case-card" style="margin-bottom:20px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-      <span class="case-badge" style="background:var(--accent-gold-dim); color:var(--accent-gold); border-color:rgba(255,193,7,0.2);">05</span>
-      <span style="font-family:'Cairo',sans-serif; font-weight:700; color:var(--text-heading); font-size:1.05rem;">صحتي | D2C</span>
+  <!-- Case 05 -->
+  <div class="case-card" style="margin-bottom:28px;">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <span class="case-badge" style="background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important; font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">05</span>
+      <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">صحتي | D2C</span>
     </div>
-    <div class="cards-grid cols-3" style="gap:14px;">
+    <div class="cards-grid cols-3" style="gap:20px;">
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">المشكلة</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">المشكلة</div>
         <div class="card-text">كان في اعتراض على السعر مقارنة بالسناكات التقليدية، مع الحاجة للوصول لشرائح جديدة مثل الموظفين والطلاب والأمهات.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-gold); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">شنو اللي سويناه؟</div>
-        <div class="card-text">بدل ما ندافع عن السعر، ركزنا على توضيح قيمة المنتج وربطناه باستعمالات (فطور سريع، بديل طاقة). صممنا باقات ونوعنا المحتوى الإعلاني.</div>
+        <div style="font-size:0.9rem; color:#ffc107 !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">شنو اللي سويناه؟</div>
+        <div class="card-text">ركزنا على توضيح قيمة المنتج وربطناه باستعمالات (فطور سريع، بديل طاقة). صممنا باقات ونوعنا المحتوى الإعلاني.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">النتيجة</div>
-        <div class="card-text" style="color:var(--text-heading);">زيادة ملحوظة <strong style="color:var(--accent-gold);">بمتوسط قيمة الطلب</strong>، والوصول لشرائح جديدة من العملاء، وبناء مكتبة قوية من المحتوى.</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
+        <div class="card-text" style="color:#ffffff !important;">زيادة ملحوظة <strong style="color:#ffc107 !important;">بمتوسط قيمة الطلب</strong>، والوصول لشرائح جديدة من العملاء، وبناء مكتبة قوية من المحتوى.</div>
       </div>
     </div>
   </div>
 
-  <!-- Case 06: E-Commerce Brand -->
-  <div class="case-card" style="margin-bottom:20px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-      <span class="case-badge">06</span>
-      <span style="font-family:'Cairo',sans-serif; font-weight:700; color:var(--text-heading); font-size:1.05rem;">علامة تجارية للتجارة الإلكترونية</span>
+  <!-- Case 06 -->
+  <div class="case-card" style="margin-bottom:28px;">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <span class="case-badge" style="font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">06</span>
+      <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">علامة تجارية للتجارة الإلكترونية</span>
     </div>
-    <div class="cards-grid cols-3" style="gap:14px;">
+    <div class="cards-grid cols-3" style="gap:20px;">
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">المشكلة</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">المشكلة</div>
         <div class="card-text">مبيعات مو مستقرة، تكلفة اكتساب غالية، ومافي استفادة كافية من العملاء الحاليين.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-gold); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">شنو اللي سويناه؟</div>
-        <div class="card-text">أعدنا بناء مسار البيع. اختبرنا محتوى يركز على مشاكل العملاء وحلولها. وما اعتمدنا بس على جلب الجدد بل ركزنا على تكرار الشراء والقيمة الدائمة.</div>
+        <div style="font-size:0.9rem; color:#ffc107 !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">شنو اللي سويناه؟</div>
+        <div class="card-text">أعدنا بناء مسار البيع. اختبرنا محتوى يركز على مشاكل وحلول. وركزنا على تكرار الشراء والقيمة الدائمة.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">النتيجة</div>
-        <div class="card-text" style="color:var(--text-heading);">استقرار أحسن بتحقيق <strong style="color:var(--accent-gold);">عائد إعلاني عالي</strong>، وتقليل تكلفة الحصول على العميل، مع ارتفاع واضح بتكرار الشراء والقيمة الدائمة للعملاء.</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
+        <div class="card-text" style="color:#ffffff !important;">استقرار أحسن بتحقيق <strong style="color:#ffc107 !important;">عائد إعلاني عالي</strong>، وتقليل تكلفة الحصول على العميل، وارتفاع واضح بتكرار الشراء.</div>
       </div>
     </div>
   </div>
 
-  <!-- Case 07: عبّو B2B + D2C -->
-  <div class="case-card" style="margin-bottom:20px;">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-      <span class="case-badge" style="background:var(--accent-gold-dim); color:var(--accent-gold); border-color:rgba(255,193,7,0.2);">07</span>
-      <span style="font-family:'Cairo',sans-serif; font-weight:700; color:var(--text-heading); font-size:1.05rem;">عبو | B2B + D2C</span>
+  <!-- Case 07 -->
+  <div class="case-card" style="margin-bottom:28px;">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <span class="case-badge" style="background:rgba(255,193,7,0.15) !important; color:#ffc107 !important; border-color:rgba(255,193,7,0.25) !important; font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">07</span>
+      <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">عبو | B2B + D2C</span>
     </div>
-    <div class="cards-grid cols-3" style="gap:14px;">
+    <div class="cards-grid cols-3" style="gap:20px;">
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">المشكلة</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">المشكلة</div>
         <div class="card-text">ضعف السحب من تجار الجملة، وارتفاع تكلفة التوصيل للمستهلك النهائي، وهذا كان يضغط على هامش الربح.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-gold); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">شنو اللي سويناه؟</div>
-        <div class="card-text">بالمستهلك النهائي صممنا باقات ترفع متوسط قيمة الطلب وتخلي الشحن المجاني مربح. وللشركات أظهرنا سرعة دوران المنتج عند التجار مع دعم إعلاني.</div>
+        <div style="font-size:0.9rem; color:#ffc107 !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">شنو اللي سويناه؟</div>
+        <div class="card-text">للمستهلك صممنا باقات ترفع متوسط الطلب. وللشركات أظهرنا سرعة دوران المنتج عند التجار مع دعم إعلاني.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">النتيجة</div>
-        <div class="card-text" style="color:var(--text-heading);">صارت العلامة التجارية <strong style="color:var(--accent-gold);">أكثر طلبًا وانتشارًا</strong>، وزادت حركة طلب المنتج من المتاجر، مع تحسن كبير بكفاءة المبيعات عبر الإنترنت.</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
+        <div class="card-text" style="color:#ffffff !important;">صارت العلامة التجارية <strong style="color:#ffc107 !important;">أكثر طلبًا وانتشارًا</strong>، وزادت حركة طلب المنتج من المتاجر.</div>
       </div>
     </div>
   </div>
-
-  <!-- Case 08: زيت زيتون السهل -->
+  
+  <!-- Case 08 -->
   <div class="case-card">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-      <span class="case-badge">08</span>
-      <span style="font-family:'Cairo',sans-serif; font-weight:700; color:var(--text-heading); font-size:1.05rem;">زيت زيتون السهل</span>
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <span class="case-badge" style="font-size: 0.85rem; padding: 6px 18px; margin-bottom:0;">08</span>
+      <span style="font-family:'Cairo',sans-serif; font-weight:800; color:#f0f2f8 !important; font-size:1.25rem;">زيت زيتون السهل</span>
     </div>
-    <div class="cards-grid cols-3" style="gap:14px;">
+    <div class="cards-grid cols-3" style="gap:20px;">
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">المشكلة</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">المشكلة</div>
         <div class="card-text">سوق منافسته قوية، شكوک عند المستهلكين بخصوص الجودة، وارتفاع تكاليف الشحن.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-gold); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">شنو اللي سويناه؟</div>
-        <div class="card-text">بدأنا من المستهلك النهائي. بنينا الثقة بتجارب حقيقية، وصممنا عروض تغطي تكلفة الشحن بربح. الطلب اللي انبنى صار قوة نتفاوض بيها ويه قطاع الشركات.</div>
+        <div style="font-size:0.9rem; color:#ffc107 !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">شنو اللي سويناه؟</div>
+        <div class="card-text">بنينا الثقة بتجارب حقيقية، وصممنا عروض تغطي تكلفة الشحن بربح. الطلب اللي انبنى صار قوة نتفاوض بيها مع الشركات.</div>
       </div>
       <div>
-        <div style="font-size:0.78rem; color:var(--accent-cyan); font-family:'Cairo',sans-serif; font-weight:700; margin-bottom:6px;">النتيجة</div>
-        <div class="card-text" style="color:var(--text-heading);">مبيعات قوية للأفراد، وقاعدة عملاء ولاءهم عالي، وبعدين استخدام هذا الطلب كقاعدة <strong style="color:var(--accent-gold);">للتوسع</strong> بقطاع الشركات والتوزيع.</div>
+        <div style="font-size:0.9rem; color:#00e5ff !important; font-family:'Cairo',sans-serif; font-weight:800; margin-bottom:8px;">النتيجة</div>
+        <div class="card-text" style="color:#ffffff !important;">مبيعات قوية للأفراد، وقاعدة عملاء ولاءهم عالي، وبعدين استخدام هذا الطلب كقاعدة <strong style="color:#ffc107 !important;">للتوسع</strong> بقطاع الشركات.</div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ OUR WAY / WHAT WE DON'T DO ═══════════ -->
-<section class="section">
+<!-- ═══════════ PAGE 7: OUR WAY ═══════════ -->
+<div class="print-page">
   <div class="section-label gold">فلسفتنا</div>
   <h2 class="section-title">شنو اللي يميز <span class="gold">طريقتنا؟</span></h2>
   <div class="title-line"></div>
 
-  <div class="feature-grid">
+  <div class="feature-grid" style="margin-bottom: 40px;">
     <div class="feature-item">
-      <div class="feature-icon">◆</div>
+      <div class="feature-icon" style="font-size:1.4rem;">◆</div>
       <div>
-        <div class="card-title" style="margin-bottom:6px;">نبدأ من البزنس مو الإعلان</div>
-        <div class="feature-text">إذا كانت المشكلة بالعرض نصلح العرض. وإذا كانت بتكلفة العميل نشتغل على تحسين الاستحواذ. وإذا بالتحويل نصلح المسار. وإذا بقيمة العميل نرفع متوسط الطلب. وإذا الأرقام ما تسمح بالتوسع، نصلح الاقتصاديات بالبداية وما نطلب تصرف أكثر.</div>
+        <div class="card-title" style="margin-bottom:10px; font-size: 1.15rem;">نبدأ من البزنس مو الإعلان</div>
+        <div class="feature-text" style="font-size: 1.05rem;">إذا كانت المشكلة بالعرض نصلح العرض. وإذا كانت بتكلفة العميل نشتغل على تحسين الاستحواذ. وإذا بالتحويل نصلح المسار. وإذا بقيمة العميل نرفع متوسط الطلب. وإذا الأرقام ما تسمح بالتوسع، نصلح الاقتصاديات بالبداية وما نطلب تصرف أكثر.</div>
       </div>
     </div>
     <div class="feature-item">
-      <div class="feature-icon">◆</div>
+      <div class="feature-icon" style="font-size:1.4rem;">◆</div>
       <div>
-        <div class="card-title" style="margin-bottom:6px;">ما نبيعك إعلانات</div>
-        <div class="feature-text">الإعلانات تقدر تجيبلك زيارات، بس الزيارات مو مبيعات، والمبيعات مو أرباح، والأرباح مو نمو مستدام إذا كل شهر يبدأ من الصفر. إحنا نشوف السلسلة كاملة: الإعلان ← الاهتمام ← الزيارة ← التحويل ← الشراء ← قيمة الطلب ← تكرار الشراء ← قيمة العميل ← الربح ← التوسع. إذا في ضعف بأي مرحلة راح يأثر على اللي بعدها. ندور على منظومة تجارية تشتغل.</div>
+        <div class="card-title" style="margin-bottom:10px; font-size: 1.15rem;">ما نبيعك إعلانات</div>
+        <div class="feature-text" style="font-size: 1.05rem;">الإعلانات تقدر تجيبلك زيارات، بس الزيارات مو مبيعات. إحنا نشوف السلسلة كاملة: الإعلان ← الاهتمام ← الزيارة ← التحويل ← الشراء ← قيمة الطلب ← تكرار الشراء ← قيمة العميل ← الربح ← التوسع. إذا في ضعف بأي مرحلة راح يأثر على اللي بعدها.</div>
       </div>
     </div>
     <div class="feature-item">
-      <div class="feature-icon" style="color: #ff4757; background: rgba(255, 71, 87, 0.1);">✕</div>
+      <div class="feature-icon" style="color: #ff4757 !important; background: rgba(255, 71, 87, 0.15) !important; font-size:1.4rem; box-shadow: 0 0 15px rgba(255,71,87,0.2) !important;">✕</div>
       <div>
-        <div class="card-title" style="margin-bottom:6px;">ما نعتبر زيادة الصرف إنجاز</div>
-        <div class="feature-text">زيادة الميزانية مو نجاح إذا كانت كل زيادة بالصرف تشتري مبيعات ما بيها ربح. فلسفتنا بالتوسع: "الحملة نجحت. ليش؟ ونقدر نكرر النجاح؟ وهل الربحية بعدها موجودة إذا زيدنا الصرف؟" إذا الجواب إي، نبدأ بالتوسع. وإذا لا، نرجع للاختبار.</div>
+        <div class="card-title" style="margin-bottom:10px; font-size: 1.15rem;">ما نعتبر زيادة الصرف إنجاز</div>
+        <div class="feature-text" style="font-size: 1.05rem;">زيادة الميزانية مو نجاح إذا كانت كل زيادة بالصرف تشتري مبيعات ما بيها ربح. فلسفتنا بالتوسع: "الحملة نجحت. ليش؟ ونقدر نكرر النجاح؟ وهل الربحية بعدها موجودة إذا زيدنا الصرف؟" إذا الجواب إي، نبدأ بالتوسع. وإذا لا، نرجع للاختبار.</div>
       </div>
     </div>
     <div class="feature-item">
-      <div class="feature-icon" style="color: #ff4757; background: rgba(255, 71, 87, 0.1);">✕</div>
+      <div class="feature-icon" style="color: #ff4757 !important; background: rgba(255, 71, 87, 0.15) !important; font-size:1.4rem; box-shadow: 0 0 15px rgba(255,71,87,0.2) !important;">✕</div>
       <div>
-        <div class="card-title" style="margin-bottom:6px;">ما نقيس النجاح بالإعجابات</div>
-        <div class="feature-text">الإعجابات والتفاعل مؤشرات جيدة بس مو هي الهدف النهائي. نريد نعرف: كم صرفت؟ كم عملاء جبت؟ كم دفعت حتى تجيبهم؟ كم صرفوا؟ وكم ربحت منهم؟ ما نطلق حملة وننتظر الحظ. نختبر، نتعلم، نعدل. وما نحاول نصلح كل شي بنفس الوقت، نركز على أكبر مشكلة تمنع النمو.</div>
+        <div class="card-title" style="margin-bottom:10px; font-size: 1.15rem;">ما نقيس النجاح بالإعجابات</div>
+        <div class="feature-text" style="font-size: 1.05rem;">الإعجابات والتفاعل مؤشرات جيدة بس مو هي الهدف النهائي. نريد نعرف: كم صرفت؟ كم عملاء جبت؟ كم دفعت حتى تجيبهم؟ كم صرفوا؟ وكم ربحت منهم؟ نختبر، نتعلم، نعدل. وما نحاول نصلح كل شي بنفس الوقت، نركز على أكبر مشكلة.</div>
       </div>
     </div>
   </div>
 
-  <div class="case-card" style="margin-top:32px;">
-    <p style="font-family:'Cairo',sans-serif; font-size:1.1rem; font-weight:800; color:var(--accent-gold); margin-bottom:10px;">ليش هذا مهم؟</p>
-    <p class="card-text">لأن الفرق بين شركة تصرف أكثر وشركة تنمو فعلاً هو قدرتها على تحويل الفلوس اللي تصرفها لفلوس أكثر. إذا صرفت 10,000 وحصلت 20,000 مبيعات، هذا بوحده ما يقولنا إذا إنت ناجح. نحتاج نعرف تكلفة المنتج، تكلفة التوصيل، الرواتب، تكلفة البيع، الربح من العميل، وشنو اللي راح يصير إذا رجع يشتري.</p>
-    <p class="card-text" style="margin-top:12px; color:var(--accent-cyan); font-weight:700;">لهذا نركز على اقتصاديات العميل. الهدف هو تبني شركة تقدر تصرف أكثر لأنها تحقق أكثر.</p>
+  <div class="case-card" style="padding: 40px; text-align: center;">
+    <p style="font-family:'Cairo',sans-serif; font-size:1.3rem; font-weight:900; color:#ffc107 !important; margin-bottom:16px; text-shadow: 0 0 20px rgba(255,193,7,0.2) !important;">ليش هذا مهم؟</p>
+    <p class="card-text" style="font-size: 1.15rem;">لأن الفرق بين شركة تصرف أكثر وشركة تنمو فعلاً هو قدرتها على تحويل الفلوس اللي تصرفها لفلوس أكثر. إذا صرفت 10,000 وحصلت 20,000 مبيعات، هذا بوحده ما يقولنا إذا إنت ناجح. نحتاج نعرف تكلفة المنتج، تكلفة التوصيل، الرواتب، تكلفة البيع، الربح من العميل، وشنو اللي راح يصير إذا رجع يشتري.</p>
+    <p class="card-text" style="margin-top:20px; color:#00e5ff !important; font-weight:800; font-size: 1.25rem; text-shadow: 0 0 15px rgba(0,229,255,0.2) !important;">لهذا نركز على اقتصاديات العميل. الهدف هو تبني شركة تقدر تصرف أكثر لأنها تحقق أكثر.</p>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
-
-<!-- ═══════════ WHAT YOU GET ═══════════ -->
-<section class="section">
-  <div class="section-label">شنو اللي تحصل عليه من تشتغل ويانا؟</div>
-  <h2 class="section-title">فريق يشتغل على أجزاء مختلفة من <span class="cyan">منظومة النمو</span></h2>
+<!-- ═══════════ PAGE 8: CONCLUSION ═══════════ -->
+<div class="print-page">
+  <div class="section-label">شراكة النمو</div>
+  <h2 class="section-title">هل شركتك جاهزة <span class="cyan">للتوسع؟</span></h2>
   <div class="title-line"></div>
 
-  <div class="cards-grid cols-4">
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem;">تحليل الأرقام</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem; color:var(--accent-gold);">تحسين العرض</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem;">بناء واختبار الإعلانات</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem; color:var(--accent-cyan);">إنتاج المحتوى</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem; color:var(--accent-cyan);">تحسين مسار البيع</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem;">تحسين معدل التحويل</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem; color:var(--accent-gold);">رفع متوسط قيمة الطلب</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem;">زيادة تكرار الشراء</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem;">تحسين القيمة الدائمة</div></div>
-    <div class="card" style="text-align:center;"><div class="card-title" style="font-size:0.95rem; color:var(--accent-cyan);">إدارة الميزانيات</div></div>
-    <div class="card" style="text-align:center; grid-column: span 2;"><div class="card-title" style="font-size:0.95rem; color:var(--accent-gold);">تحويل اللي يثبت نجاحه لخطة توسع</div></div>
+  <div class="cards-grid cols-2" style="margin-bottom: 40px;">
+    <div class="card" style="padding: 40px;">
+      <div class="card-title" style="font-size: 1.3rem; margin-bottom: 16px; color: #ffc107 !important;">شنو اللي تحصل عليه من تشتغل ويانا؟</div>
+      <div class="card-text" style="font-size: 1.1rem;">
+        فريق يشتغل على أجزاء مختلفة من منظومة النمو: تحليل الأرقام، تحسين العرض، بناء واختبار الإعلانات، إنتاج المحتوى، تحسين مسار البيع، تحسين معدل التحويل، رفع متوسط قيمة الطلب، زيادة تكرار الشراء، وتحسين القيمة الدائمة للعميل.
+        <br><br>
+        <span style="color: #ffffff !important; font-weight: 700;">الفكرة مو إضافة خدمات كثيرة للقائمة. الفكرة إن كل جزء يخدم نتيجة وحدة: يخلي الحصول على العميل أكثر كفاءة ويخلي العميل قيمته أكبر.</span>
+      </div>
+    </div>
+    
+    <div class="card" style="padding: 40px;">
+      <div class="card-title" style="font-size: 1.3rem; margin-bottom: 16px; color: #00e5ff !important;">نبدأ من الأرقام، مو بالتخمين</div>
+      <div class="card-text" style="font-size: 1.1rem;">
+        ما نريد نكون الجهة اللي تدير إعلاناتك وبس. نريد نكون الجهة اللي تساعدك تعرف كيف شركتك تنمو بشكل مربح. 
+        <br><br>
+        راح نراجع طريقتك بجلب العملاء، وتكلفة جلبهم، وقيمة اللي يحققوه، ومسار البيع، والعرض، واللي يصير بعد أول مرة يشترون بيها. وبعدين نحدد وين في أكبر فرصة للتحسين.
+      </div>
+    </div>
   </div>
 
-  <p class="section-desc" style="text-align:center; margin-top:24px; color:var(--text-heading); font-weight:600;">الفكرة مو إضافة خدمات كثيرة للقائمة. الفكرة إن كل جزء يخدم نتيجة وحدة: يخلي الحصول على العميل أكثر كفاءة ويخلي العميل قيمته أكبر.</p>
-</section>
+  <div class="case-card" style="text-align:center; padding: 50px 40px;">
+    <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 20px; color: #ffffff !important;">الخطوة الجاية</h3>
+    <p class="card-text" style="font-size: 1.25rem; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+      إذا الأرقام أثبتت إن في فرصة للتوسع، راح نقولك كيف. وإذا كانت في مشكلة لازم تتصلح بالبداية، راح نقولك عليها بوضوح. لأن هدفنا مو إننا ندير ميزانيتك. هدفنا إننا نخلي ميزانيتك تشتغل بشكل أحسن.
+    </p>
+    <a href="https://wa.me/9647858328728" style="display: inline-block; padding: 18px 50px; background: rgba(0,229,255,0.1) !important; border: 2px solid #00e5ff !important; color: #00e5ff !important; font-family: 'Cairo', sans-serif; font-weight: 900; font-size: 1.2rem; border-radius: 50px; text-shadow: 0 0 10px rgba(0,229,255,0.4) !important; box-shadow: 0 0 25px rgba(0,229,255,0.2) !important;">
+      ◆ تواصل ويانا هسه عبر الواتساب
+    </a>
+    <p style="margin-top: 20px; font-size: 1.1rem; color: #ffc107 !important; font-family: 'Tajawal', sans-serif; font-weight: 700; direction: ltr;">
+      +964 785 832 8728
+    </p>
+  </div>
+
+</div>
 
 </body>
 </html>
